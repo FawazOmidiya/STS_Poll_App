@@ -20,5 +20,8 @@ from api import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/polling', views.PollingDataView.as_view(), name="polling_data")
+    path('api/polling', views.PollingDataView.as_view(), name="polling_data"),
+    path('api/state_polling', views.StatePollingDataView.as_view(), name="state_polling_data"),  
+    path('api/state_polling/bar/<str:state_name>', views.polling_bar_graph, name="state_polling_bar_graph"), 
+    path('api/state_polling/pie/<str:state_name>', views.polling_pie_chart, name="state_polling_pie_chart"),   # Add pie chart endpoint here
 ]
