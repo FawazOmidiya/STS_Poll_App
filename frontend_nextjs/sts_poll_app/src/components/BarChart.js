@@ -15,89 +15,86 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-];
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-};
-
-export function BarChartComponent(stateName) {
+export function BarChartComponent({ stateName }) {
+  const [pollData, setPollData] = useState(null);
+  const [error, setError] = useState(null);
   useEffect(() => {
-    const fetchBarGraph = async () => {
+    const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/state_polling/bar/${stateName}`, // Backend API URL
-          { responseType: "blob" } // Ensure the response is treated as binary data
+          `http://127.0.0.1:8000/api/state_polling/${stateName}` // Backend API URL
         );
-
-        // Convert the binary response to a URL
-        const blob = new Blob([response.data], { type: "image/png" });
-        const url = URL.createObjectURL(blob);
-        setImageUrl(url);
+        setPollData(response.data.candidates);
       } catch (err) {
-        setError("Failed to load the bar graph.");
+        setError("Failed to load data.");
         console.error(err);
       }
     };
 
-    fetchBarGraph();
+    fetchData();
   }, [stateName]);
+
+  const chartConfig = {
+    desktop: {
+      label: "Desktop",
+      color: "hsl(var(--chart-1))",
+    },
+  };
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Bar Chart - Label</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              top: 20,
-            }}
+    <AspectRatio ratio={16 / 9}>
+      <Card className="w-fit justify-center">
+        <CardHeader>
+          <CardTitle>{stateName}</CardTitle>
+          <CardDescription>January - June 2024</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ChartContainer
+            config={chartConfig}
+            className="max-h-[400px] w-[400px]"
           >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={8}>
-              <LabelList
-                position="top"
-                offset={12}
-                className="fill-foreground"
-                fontSize={12}
+            <BarChart
+              accessibilityLayer
+              data={pollData}
+              margin={{
+                top: 20,
+              }}
+            >
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="name"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
               />
-            </Bar>
-          </BarChart>
-        </ChartContainer>
-      </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
-    </Card>
+              {/* hiding the tooltip for later in case I want to refine it */}
+              {/* <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              /> */}
+              <Bar dataKey="voteNum" fill="var(--color-desktop)" radius={8}>
+                <LabelList
+                  position="top"
+                  offset={12}
+                  className="fill-foreground"
+                  fontSize={12}
+                />
+              </Bar>
+            </BarChart>
+          </ChartContainer>
+        </CardContent>
+        <CardFooter className="flex-col items-start gap-2 text-sm">
+          <div className="flex gap-2 font-medium leading-none">
+            Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          </div>
+          <div className="leading-none text-muted-foreground">
+            Showing total visitors for the last 6 months
+          </div>
+        </CardFooter>
+      </Card>
+    </AspectRatio>
   );
 }
