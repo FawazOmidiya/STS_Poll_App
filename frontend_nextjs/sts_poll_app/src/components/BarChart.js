@@ -1,7 +1,14 @@
 "use client";
 
 import { TrendingUp } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  XAxis,
+  ResponsiveContainer,
+} from "recharts";
 import {
   Card,
   CardContent,
@@ -41,60 +48,69 @@ export function BarChartComponent({ stateName }) {
   const chartConfig = {
     desktop: {
       label: "Desktop",
+      color: "hsl(var(--chart-5))",
+    },
+    Votes: {
+      name: "Number of Votes",
+    },
+    donald: {
       color: "hsl(var(--chart-1))",
+    },
+    "Kamala Harris": {
+      color: "hsl(var(--chart-2))",
     },
   };
   return (
-    <AspectRatio ratio={16 / 9}>
-      <Card className="w-fit justify-center">
-        <CardHeader>
-          <CardTitle>{stateName}</CardTitle>
-          <CardDescription>January - June 2024</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ChartContainer
-            config={chartConfig}
-            className="max-h-[400px] w-[400px]"
+    <Card>
+      <CardHeader>
+        <CardTitle>{stateName}</CardTitle>
+        <CardDescription>2024 Presidential Election</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ChartContainer config={chartConfig} className="h-full w-full">
+          <BarChart
+            accessibilityLayer
+            data={pollData}
+            margin={{
+              top: 20,
+            }}
           >
-            <BarChart
-              accessibilityLayer
-              data={pollData}
-              margin={{
-                top: 20,
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="fullName"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+              tickFormatter={(value) => {
+                // Split the full name into first and last names
+                const [firstName, lastName] = value.split(" ");
+                // Return formatted name: first initial + last name
+                return `${firstName.charAt(0)}. ${lastName}`;
               }}
-            >
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="name"
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
+            />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent nameKey="votes" />}
+            />
+            <Bar dataKey="voteNum" fill="var(--color-desktop)" radius={8}>
+              <LabelList
+                position="top"
+                offset={12}
+                className="fill-foreground"
+                fontSize={12}
               />
-              {/* hiding the tooltip for later in case I want to refine it */}
-              {/* <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent hideLabel />}
-              /> */}
-              <Bar dataKey="voteNum" fill="var(--color-desktop)" radius={8}>
-                <LabelList
-                  position="top"
-                  offset={12}
-                  className="fill-foreground"
-                  fontSize={12}
-                />
-              </Bar>
-            </BarChart>
-          </ChartContainer>
-        </CardContent>
-        <CardFooter className="flex-col items-start gap-2 text-sm">
-          <div className="flex gap-2 font-medium leading-none">
-            Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-          </div>
-          <div className="leading-none text-muted-foreground">
-            Showing total visitors for the last 6 months
-          </div>
-        </CardFooter>
-      </Card>
-    </AspectRatio>
+            </Bar>
+          </BarChart>
+        </ChartContainer>
+      </CardContent>
+      <CardFooter className="flex-col items-start gap-2 text-sm">
+        <div className="flex gap-2 font-medium leading-none">
+          As reported by CNN
+        </div>
+        <div className="leading-none text-muted-foreground">
+          Showing total votes per candidate
+        </div>
+      </CardFooter>
+    </Card>
   );
 }
