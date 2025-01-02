@@ -39,31 +39,38 @@ def populate_election_results():
         return
 
     for race in results:
-        state_results, created = StatePollingData.objects.get_or_create(
+        state_results, created = StatePollingData.objects.update_or_create(
             state=race["stateName"],
             defaults={
                 "party_winner": race.get("winnerBopPartyId", "N/A"),
                 "total_votes": race.get("totalVote", 0),
-                "electoralVotes": race.get("electoralVotes").get("electoralVotesAtStake", 0),
+                "electoralVotes": race.get("electoralVotes", {}).get("electoralVotesAtStake", 0),
             }
         )
-        if not created:  # Update existing state result
-            state_results.party_winner = race.get("winnerBopPartyId", "N/A")
-            state_results.total_votes = race.get("totalVote", 0)
-            state_results.electoralVotes = race.get("electoralVotes").get("electoralVotesAtStake", 0)
-            state_results.save()
+        
+        existing_candidates = {candidate.fullName: candidate for candidate in state_results.candidates.all()}
+        for candidate_data in race.get("candidates", []):
+            full_name = candidate_data["fullName"]
+            if full_name in existing_candidates:
+                # Update existing candidate
+                candidate_obj = existing_candidates[full_name]
+                candidate_obj.voteNum = candidate_data.get("voteNum", 0)
+                candidate_obj.votePcnt = candidate_data.get("votePercentNum", 0.0)
+                candidate_obj.party = candidate_data.get("majorParty", "Unknown")
+                candidate_obj.save()
+            else:
+                # Create new candidate
+                candidate_obj = Candidate.objects.create(
+                    fullName=full_name,
+                    firstName=candidate_data.get("firstName", ""),
+                    lastName=candidate_data.get("lastName", ""),
+                    party=candidate_data.get("majorParty", "Unknown"),
+                    voteNum=candidate_data.get("voteNum", 0),
+                    votePcnt=candidate_data.get("votePercentNum", 0.0),
+                )
+                state_results.candidates.add(candidate_obj)
 
-        for candidate in race.get("candidates", []):
-            
-            candidate_obj = Candidate.objects.create(
-                name=candidate["fullName"],
-                party=candidate.get("majorParty", "Unknown"),
-                voteNum = candidate.get("voteNum", 0),
-                votePcnt = candidate.get("votePercentNum", 0.0),
-            )
-
-            state_results.candidates.add(candidate_obj)
-
+        # Save StatePollingData after processing candidates
         state_results.save()
 
     print("Database populated successfully!")
