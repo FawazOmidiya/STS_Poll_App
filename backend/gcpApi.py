@@ -1,4 +1,6 @@
 import requests
+import ee
+
 
 API_KEY = 'AIzaSyCOTVvrMOHC3wpucx5BMdfTgPdW-8rqs3k'
 BASE_URL = "https://www.googleapis.com/civicinfo/v2"
@@ -28,7 +30,11 @@ def get_voter_info(address):
         print("Error:", response.status_code, response.text)
         return None
 
-# Example usage
-address = "1600 Pennsylvania Ave NW, Washington, DC 20500"
-voter_info = get_voter_info(address)
-print(voter_info)
+try:
+    # Trigger interactive authentication
+    ee.Authenticate()
+    # Initialize Earth Engine API
+    ee.Initialize()
+    print("Earth Engine authenticated and initialized successfully!")
+except Exception as e:
+    print(f"Authentication failed: {e}")

@@ -10,7 +10,7 @@ from .models import Candidate, StatePollingData
 class CandidateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
-        fields = ["fullName","firstName","lastName", "party", "voteNum", "votePcnt"]
+        fields = ["fullName","firstName","lastName", "party", "voteNum", "votePcnt", "fill"]
 
 class StatePollingDataSerializer(serializers.ModelSerializer):
     candidates = CandidateSerializer(many=True)  # Serialize nested candidates

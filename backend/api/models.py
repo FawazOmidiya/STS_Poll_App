@@ -17,6 +17,7 @@ class Candidate(models.Model):
     party = models.CharField(max_length=50)
     voteNum = models.IntegerField(default=0)  # Default added for robustness
     votePcnt = models.FloatField(default=0.0)  # Default added for robustness
+    fill = models.CharField(max_length=50, default="var(--color-Unknown)")  # Default color for unknown parties
 
     def __str__(self):
         return f"{self.fullName} ({self.party})"
