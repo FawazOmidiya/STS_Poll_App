@@ -51,13 +51,31 @@ export function BarChartComponent({ stateName }) {
       color: "hsl(var(--chart-5))",
     },
     Votes: {
-      name: "Number of Votes",
+      label: "Number of Votes: ",
     },
-    donald: {
+    REP: {
+      color: "#d30b0d",
+    },
+    DEM: {
+      color: "#013364",
+    },
+    IND: {
       color: "hsl(var(--chart-1))",
     },
-    "Kamala Harris": {
+    LIB: {
       color: "hsl(var(--chart-2))",
+    },
+    GRN: {
+      color: "hsl(var(--chart-3))",
+    },
+    AUR: {
+      color: "hsl(var(--chart-4))",
+    },
+    ASP: {
+      color: "hsl(var(--chart-5))",
+    },
+    CST: {
+      color: "hsl(var(--chart-3))",
     },
   };
   return (
@@ -90,9 +108,9 @@ export function BarChartComponent({ stateName }) {
             />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent nameKey="votes" />}
+              content={<ChartTooltipContent nameKey="Votes" />}
             />
-            <Bar dataKey="voteNum" fill="var(--color-desktop)" radius={8}>
+            <Bar dataKey="votePcnt" radius={8}>
               <LabelList
                 position="top"
                 offset={12}
