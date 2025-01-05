@@ -15,7 +15,7 @@ function GoogleMap({ location }) {
         const mapInstance = new window.google.maps.Map(mapRef.current, {
           center: defaultCoordinates, // Default to San Francisco
           zoom: 7,
-          mapTypeId: "satellite",
+          mapTypeId: "hybrid",
         });
         setMap(mapInstance); // Save the map instance for later updates
       }
@@ -40,7 +40,7 @@ function GoogleMap({ location }) {
       if (map && location) {
         const coordinates = await fetchCoordinates(location); // Fetch coordinates for the selected location
         map.panTo(coordinates); // Update map center
-        map.setZoom(6.5); // Adjust zoom level
+        map.setZoom(7); // Adjust zoom level
       }
     };
 

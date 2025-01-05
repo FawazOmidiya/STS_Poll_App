@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { Combobox } from "@/components/Combobox";
 import { BarChartComponent } from "@/components/BarChart";
+import GoogleMap from "@/components/GoogleMap";
+import GoogleMapsScript from "@/lib/GoogleMapsScript";
 
 function Polls() {
   const listOfStates = [
@@ -66,26 +68,26 @@ function Polls() {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 bg-slate-500">
+      <GoogleMapsScript />{" "}
+      {/* Ensure GoogleMapsScript is imported and included */}
       <h1 className="text-2xl font-bold mb-4">Select Your State</h1>
       <Combobox list={listOfStates} onSelect={handleStateSelection} />
       {selectedState && (
         <div className="mt-6">
           <h2 className="text-xl font-semibold">
             Polling Results for {selectedState}
-            <div className="h-3/4 w-3/4 m-auto">
-              <BarChartComponent stateName={selectedState} />
-            </div>
           </h2>
+          <div className="h-3/4 w-3/4 m-auto">
+            <BarChartComponent stateName={selectedState} />
+          </div>
+          <GoogleMap location={selectedState} />
           {/* Render your chart or polling data here */}
         </div>
       )}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 bg-slate-500">
         {listOfStates.map((state) => (
-          <div
-            key={state}
-            className="p-4 rounded-lg bg-white dark:bg-gray-800 h-fit w-full"
-          >
+          <div key={state} className="p-4 rounded-lg h-fit w-full">
             {/* Pass stateName to the BarChartComponent */}
             <BarChartComponent stateName={state} />
           </div>
