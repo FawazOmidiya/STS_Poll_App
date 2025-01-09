@@ -110,7 +110,7 @@ export function BarChartComponent({ stateName }) {
               cursor={false}
               content={<ChartTooltipContent nameKey="Votes" />}
             />
-            <Bar dataKey="votePcnt" radius={8}>
+            <Bar dataKey="voteNum" radius={8}>
               <LabelList
                 position="top"
                 offset={12}

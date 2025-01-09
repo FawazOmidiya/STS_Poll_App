@@ -12,9 +12,6 @@ export default function Navbar() {
           <Link href="/odds">Odds</Link>
         </li>
         <li>
-          <Link href="/map">Map</Link>
-        </li>
-        <li>
           <Link href="/polls">Polls</Link>
         </li>
       </ul>
