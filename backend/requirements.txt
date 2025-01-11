@@ -54,7 +54,7 @@ numpy==2.2.1
 optional-django==0.3.0
 packaging==24.2
 pandas==2.2.3
-pillow==10.2.0
+pillow==11.1.0
 postgrest==0.18.0
 propcache==0.2.1
 proto-plus==1.25.0
