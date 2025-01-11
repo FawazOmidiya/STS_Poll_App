@@ -24,14 +24,6 @@ def get_election_results():
         return None
 
 
-def print_results(results):
-    for race in results:
-        print(f"Race: {race['stateName']}")
-        print(f"Winner: {race.get('winnerBopPartyId', 'N/A')}")
-        print(f"Total Votes: {race.get('totalVote', 0)}")
-        print("---")
-
-
 def populate_election_results():
     results = get_election_results()
     if not results:
@@ -80,5 +72,4 @@ def populate_election_results():
 if __name__ == "__main__":
     results = get_election_results()
     if results:
-        print_results(results)
         populate_election_results()
