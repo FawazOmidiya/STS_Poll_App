@@ -11,13 +11,17 @@ class PollingData(models.Model):
         return f"{self.state} - {self.demographic}: {self.percentage}%"
     
 class Candidate(models.Model):
-    name = models.CharField(max_length=50)
+    fullName = models.CharField(max_length=100, default="Unknown Candidate")  # Increased length for full names
+    firstName = models.CharField(max_length=50, blank=True, null=True)  # Optional field
+    lastName = models.CharField(max_length=50, blank=True, null=True)  # Optional field
     party = models.CharField(max_length=50)
-    voteNum = models.IntegerField()
-    votePcnt = models.FloatField()
-    
+    voteNum = models.IntegerField(default=0)  # Default added for robustness
+    votePcnt = models.FloatField(default=0.0)  # Default added for robustness
+    fill = models.CharField(max_length=50, default="var(--color-Unknown)")  # Default color for unknown parties
+
     def __str__(self):
-        return f"{self.name} ({self.party})"
+        return f"{self.fullName} ({self.party})"
+
 
 class StatePollingData(models.Model):
     state = models.CharField(max_length=50)

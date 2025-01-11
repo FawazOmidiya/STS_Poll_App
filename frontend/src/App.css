@@ -1,9 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 :root {
   --primary: #282c34;
   --white: #fff;
 }
 body {
   text-align: center;
+  height: auto;
 }
 
 .App {
@@ -60,9 +64,6 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  position: fixed;
-  left: 0;
-  bottom: 0;
   width: 100%;
   align-items: left;
   justify-content: space-around;

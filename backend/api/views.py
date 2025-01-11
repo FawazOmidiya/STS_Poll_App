@@ -28,3 +28,9 @@ def polling_pie_chart(request, state_name):
     state = StatePollingData.objects.get(state=state_name)
     candidates = state.candidates.all()
     return visualizations.pollPieChart(candidates)
+
+class SingleStatePollingDataView(APIView, ):
+    def get(self, request, state_name):
+        state = StatePollingData.objects.get(state=state_name)
+        serializer = StatePollingDataSerializer(state)
+        return Response(serializer.data)

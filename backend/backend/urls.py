@@ -24,4 +24,7 @@ urlpatterns = [
     path('api/state_polling', views.StatePollingDataView.as_view(), name="state_polling_data"),  
     path('api/state_polling/bar/<str:state_name>', views.polling_bar_graph, name="state_polling_bar_graph"), 
     path('api/state_polling/pie/<str:state_name>', views.polling_pie_chart, name="state_polling_pie_chart"),   # Add pie chart endpoint here
+    path('api/state_polling/<str:state_name>', views.SingleStatePollingDataView.as_view(), name = "single_state_polling_data"),
 ]
+
+
