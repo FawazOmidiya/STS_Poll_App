@@ -29,14 +29,41 @@ This project is a full-stack application for visualizing polling data, betting o
 
 ---
 
-## Getting Started
+## Getting Started: Installation Instructions
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/FawazOmidiya/STS_Poll_App/tree/b1.git
-cd STS_Poll_App
+https://github.com/FawazOmidiya/STS_Poll_App.git
+```
+
+- Copy this line, and find the area in your editor that says "Clone Git Repository". If you are using VS Code, it will look something like this:
+  ![Image of Clone Git Repo](./frontend_nextjs//sts_poll_app//public/cloneExample.png)
+- Once you click on it, it will prompt you to choose an EMPTY folder, and for the link directly above. Paste it in and the repository will be cloned successfully.
+
+- First, open a terminal in your new project, this will show at the bottom of your code editor. Use the terminal to run the remaining commands in this tutorial.
+
+---
+
+### 2. Setup Environment
+
+- Run this command to activate and run the setup all the technical requirements:
+
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+### 3. Now run this command to start ther development server!
+
+```bash
+chmod +x setup.sh
+./setup.sh
 
 ```
 
-- Copy this line, and paste it into your folder command line. Ensure that the folder you use is empty.
+If you want to end the server, enter control C in the command line
+
+```bash
+^C
+```

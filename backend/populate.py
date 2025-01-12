@@ -48,7 +48,7 @@ def populate_election_results():
                 candidate_obj = existing_candidates[full_name]
                 candidate_obj.voteNum = candidate_data.get("voteNum", 0)
                 candidate_obj.votePcnt = candidate_data.get("votePercentNum", 0.0)
-                candidate_obj.fill = "var(--color-" + str(candidate_data.get("majorParty", "Unknown")),
+                candidate_obj.fill = "var(--color-" + str(candidate_data.get("majorParty", "Unknown")) + ")"
                 candidate_obj.save()
             else:
                 # Create new candidate
@@ -59,7 +59,7 @@ def populate_election_results():
                     party=candidate_data.get("majorParty", "Unknown"),
                     voteNum=candidate_data.get("voteNum", 0),
                     votePcnt=candidate_data.get("votePercentNum", 0.0),
-                    fill = "var(--color-" + str(candidate_data.get("majorParty", "Unknown")),
+                    fill= "var(--color-" + str(candidate_data.get("majorParty", "Unknown")) + ")",
                 )
                 state_results.candidates.add(candidate_obj)
 
