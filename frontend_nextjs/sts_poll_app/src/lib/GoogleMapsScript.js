@@ -3,6 +3,9 @@ import React, { useEffect } from "react";
 
 const GoogleMapsScript = () => {
   useEffect(() => {
+    if (document.querySelector("#google-maps-script")) {
+      return;
+    }
     const script = document.createElement("script");
     script.src =
       "https://maps.googleapis.com/maps/api/js?key=AIzaSyCOTVvrMOHC3wpucx5BMdfTgPdW-8rqs3k&loading=async&libraries=maps&v=beta";

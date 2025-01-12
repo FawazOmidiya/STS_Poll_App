@@ -57,8 +57,8 @@ chmod +x setup.sh
 ### 3. Now run this command to start ther development server!
 
 ```bash
-chmod +x setup.sh
-./setup.sh
+chmod +x start.sh
+./start.sh
 
 ```
 
@@ -67,3 +67,21 @@ If you want to end the server, enter control C in the command line
 ```bash
 ^C
 ```
+
+# Walk Through of Use Cases
+
+## 1 . Polling Data
+
+- The Polling data is available on the landing page, simply scroll through to view the different states and their information.
+
+## 2. Google Maps
+
+- To view the google map visualization, simply click on any of the state bar graphs to open up the detailed view of that state, and roam around in the familiar google maps interface.
+
+- Alternatively, you can search up A specific state using the select button as shown below to arrive at the same detailed view.
+  ![Dropdown Select Image](./frontend_nextjs/sts_poll_app/public/SelectView.png)
+- In this view you can view an additional Pie Chart of the graph, and zoom in to your preferred location.
+
+## 3. Betting Odds
+
+- For this section, simply navigate over to the Odds title in the heading. The odds will be displayed, and you can easiluy navigate back and forth between the two.
