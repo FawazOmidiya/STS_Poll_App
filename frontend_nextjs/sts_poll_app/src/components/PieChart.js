@@ -1,14 +1,10 @@
 "use client";
 
 import { TrendingUp } from "lucide-react";
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  LabelList,
-  XAxis,
-  ResponsiveContainer,
-} from "recharts";
+import { Pie, PieChart } from "recharts";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 import {
   Card,
   CardContent,
@@ -18,14 +14,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
-export function BarChartComponent({ stateName }) {
+export function PieChartComponent({ stateName }) {
   const [pollData, setPollData] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -76,46 +71,20 @@ export function BarChartComponent({ stateName }) {
     },
   };
   return (
-    <Card>
+    <Card className="flex flex-col">
       <CardHeader>
         <CardTitle>{stateName}</CardTitle>
         <CardDescription>2024 Presidential Election</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-1 pb-0">
         <ChartContainer config={chartConfig} className="h-full w-full">
-          <BarChart
-            accessibilityLayer
-            data={pollData}
-            margin={{
-              top: 20,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="fullName"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => {
-                // Split the full name into first and last names
-                const [firstName, lastName] = value.split(" ");
-                // Return formatted name: first initial + last name
-                return `${firstName.charAt(0)}. ${lastName}`;
-              }}
-            />
+          <PieChart>
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent nameKey="Votes" />}
+              content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="voteNum" radius={8}>
-              <LabelList
-                position="top"
-                offset={12}
-                className="fill-foreground"
-                fontSize={12}
-              />
-            </Bar>
-          </BarChart>
+            <Pie data={pollData} dataKey="votePcnt" nameKey="fullName" />
+          </PieChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
@@ -123,7 +92,7 @@ export function BarChartComponent({ stateName }) {
           As reported by CNN
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total votes per candidate
+          Showing percent of votes per candidate
         </div>
       </CardFooter>
     </Card>
