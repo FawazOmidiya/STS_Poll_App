@@ -30,7 +30,7 @@ export function PieChartComponent({ stateName }) {
         );
         setPollData(response.data.candidates);
       } catch (err) {
-        console.log(err.response.data);
+        console.log(err);
       }
     };
 
