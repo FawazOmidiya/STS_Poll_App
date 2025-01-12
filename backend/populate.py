@@ -59,7 +59,7 @@ def populate_election_results():
                     party=candidate_data.get("majorParty", "Unknown"),
                     voteNum=candidate_data.get("voteNum", 0),
                     votePcnt=candidate_data.get("votePercentNum", 0.0),
-                    fill= "var(--color-" + str(candidate_data.get("majorParty", "Unknown")) + ")",
+                    fill= "var(--color-" + str(candidate_data.get("majorParty", "Unknown")) + ")"
                 )
                 state_results.candidates.add(candidate_obj)
 
