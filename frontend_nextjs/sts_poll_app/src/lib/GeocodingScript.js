@@ -7,7 +7,6 @@ const fetchCoordinates = async (location) => {
   if (data.results && data.results.length > 0) {
     return data.results[0].geometry.location; // Return { lat, lng }
   } else {
-    console.error("Location not found!");
     console.log("Full API response:", data);
 
     return { lat: 37.7749, lng: -122.4194 }; // Default to San Francisco
