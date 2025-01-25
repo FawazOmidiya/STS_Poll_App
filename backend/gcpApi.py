@@ -2,7 +2,6 @@ import requests
 import ee
 
 
-API_KEY = 'AIzaSyCOTVvrMOHC3wpucx5BMdfTgPdW-8rqs3k'
 BASE_URL = "https://www.googleapis.com/civicinfo/v2"
 
 def get_elections():
